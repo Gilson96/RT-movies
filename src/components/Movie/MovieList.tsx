@@ -35,7 +35,7 @@ const MovieList = () => {
         genres: filters.genres,
     })
 
-    console.log(page)
+    console.log(movieList)
 
     if (!movieList) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
@@ -55,7 +55,7 @@ const MovieList = () => {
                         </button>
                     </div>
                 }
-          
+
                 {screenSize.width > 1000 && <MovieListConfig
                     type={location.state.media}
                     setFilters={setFilters}
@@ -76,7 +76,7 @@ const MovieList = () => {
                 <MovieListConfig
                     type={location.state.media}
                     setFilters={setFilters}
-                />              
+                />
             }
 
             {isLoading ?
@@ -97,24 +97,27 @@ const MovieList = () => {
                                 }}
                             >
                                 <div key={index} className='h-[8rem] w-full flex my-[5%] justify-between border rounded shadow tablet:h-[19rem] small-screen:border-none small-screen:h-[20rem] small-screen:w-[14rem] small-screen:flex small-screen:flex-col small-screen:rounded-xl small-screen:my-[8%]'>
-                                    <img className='h-full small-screen:w-full small-screen:rounded-xl' src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`} />
+                                    <img
+                                        className={`h-full small-screen:w-full small-screen:rounded-xl ${movie.poster_path === null && 'bg-neutral-600'}`}
+                                        src={movie.poster_path !== null?  `https://image.tmdb.org/t/p/w780/${movie.poster_path}` : ''}
+                                    />
 
                                     {screenSize.width > 1000 ?
                                         <div className='flex justify-between items-center px-[2%]'>
                                             <p className='font-bold text-sm'>{movie.title || movie.name}</p>
                                             <p className=' text-neutral-500 italic font-semibold'>{movie.title ?
-                                                movie.release_date.length <= 0 ? 'N/A' : movie.release_date.slice(0, 4)
+                                                movie.release_date !== "" ? 'N/A' : movie.release_date.slice(0, 4)
                                                 :
-                                                movie.first_air_date.length <= 0 ? 'N/A' : movie.first_air_date.slice(0, 4)
+                                                movie.first_air_date !== "" ? 'N/A' : movie.first_air_date.slice(0, 4)
                                             }</p>
                                         </div>
                                         :
                                         <div className='h-full w-full flex flex-col justify-center items-start p-[4%]'>
                                             <p className='font-bold text-sm tablet:text-xl'>{movie.title || movie.name}</p>
                                             <p className='text-xs text-neutral-400 italic font-semibold mb-[7%] tablet:text-lg'>Year {movie.title ?
-                                                movie.release_date.length <= 0 ? 'N/A' : movie.release_date.slice(0, 4)
+                                                movie.release_date !== "" ? 'N/A' : movie.release_date.slice(0, 4)
                                                 :
-                                                movie.first_air_date.length <= 0 ? 'N/A' : movie.first_air_date.slice(0, 4)
+                                                movie.first_air_date !== "" ? 'N/A' : movie.first_air_date.slice(0, 4)
                                             }
                                             </p>
                                             <p className='line-clamp-2 text-sm tablet:text-lg tablet:line-clamp-4'>{movie.overview}</p>
