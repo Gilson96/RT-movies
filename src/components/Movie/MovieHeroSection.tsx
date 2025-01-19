@@ -18,17 +18,14 @@ const MovieHeroSection = () => {
     // Getting id from url
     const { id } = useParams<MovieHeroSectionProps>();
     // Getting state from Link
-    // Decides if is a movie or a tv show
-    const { state }: LinkStateProps = useLocation();
+    const location: LinkStateProps = useLocation();
     // parseInt(id!) < ! > => makes variable non-nullable
     // Fix string | undefined error
-    const { data: movie, isLoading } = useGetMovieDetailsQuery({ id: parseInt(id!), type: state.media })
+    const { data: movie, isLoading } = useGetMovieDetailsQuery({ id: parseInt(id!), type: location.state.media  })
     // Screen Size hook
     const screenSize = useScreenSize()
 
-    console.log(id)
-
-    if (!movie) return <p></p>
+    if (!movie) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
     return (
         <>
@@ -41,13 +38,13 @@ const MovieHeroSection = () => {
                     <MovieHeroSectionDesktop
                         movieDetails={movie}
                         movieId={id!}
-                        poster_path={state.poster_path}
+                        poster_path={location.state.poster_path}
                     />
                     :
                     <MovieHeroSectionMobile
                         movieDetails={movie}
                         movieId={id!}
-                        poster_path={state.poster_path}
+                        poster_path={location.state.poster_path}
                     />
             }
         </>

@@ -15,13 +15,14 @@ type LinkStateProps = {
 const Movieinfo = () => {
     // Getting id from url
     const { id } = useParams<MovieInfosProps>();
-    const { state }: LinkStateProps = useLocation();
+    // Getting state from Link
+    const location: LinkStateProps = useLocation();
 
     // parseInt(id!) < ! > => makes variable non-nullable
     // Fix string | undefined error
-    const { data: movie, isLoading } = useGetMovieDetailsQuery({ id: parseInt(id!), type: state.media })
+    const { data: movie, isLoading } = useGetMovieDetailsQuery({ id: parseInt(id!), type: location.state.media })
 
-    if (!movie) return <div>Missing post!</div>
+    if (!movie) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
     return (
         <section className='h-full w-full p-[3%] flex flex-col gap-3 small-screen:p-0'>
@@ -32,7 +33,7 @@ const Movieinfo = () => {
                 :
                 <>
                     <div className='flex flex-col gap-3'>
-                        <p className='font-bold text-lg tablet:text-xl small-screen:text-2xl'>Information</p>
+                        <p className='font-bold text-lg tablet:text-xl small-screen:text-2xl small-screen:text-white'>Information</p>
                         <div className='flex gap-[4rem] small-screen:gap-[5rem]'>
                             <div className='flex flex-col gap-2'>
                                 <div className='flex flex-col'>

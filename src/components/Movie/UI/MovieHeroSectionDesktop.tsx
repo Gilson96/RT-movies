@@ -5,7 +5,8 @@ import { usePostToFavouriteMoviesMutation } from '../../../features/Account/acco
 import { usePostToWatchlistMoviesMutation } from '../../../features/Account/accountEndpoints'
 import { Movie } from '../../../features/Movies/movieDetailsEndpoints'
 import { useGetAccountDetailsQuery } from '../../../features/Account/accountEndpoints'
-import { Tooltip } from '@chakra-ui/react'
+import { Spinner, Tooltip, Alert, AlertIcon } from '@chakra-ui/react'
+import { useState } from 'react'
 
 type HeroSectionDProps = {
     movieDetails: Movie;
@@ -17,25 +18,30 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
     const { data: account, isLoading } = useGetAccountDetailsQuery([])
     const [postMovieToWatchlist] = usePostToWatchlistMoviesMutation()
     const [postMovieToFavourite] = usePostToFavouriteMoviesMutation()
+    const [feedback, setFeedback] = useState('')
     // object to add the movie into my API
     const newMovieDetails = { id: Math.floor(Math.random() * 101), movieDetails }
 
-    if (isLoading) return <p></p>
-    if (!account) return <p>missing</p>
-
+    if (!account) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
+    if (isLoading) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
+    
     // checks if movie exist in account
     const checkIfMovieExistInFavourites = () => {
         return account[0].favouriteMovies.some((movie: HeroSectionDProps) => (movie.movieDetails.id === parseInt(movieId)))
     }
+
     // checks if movie exist in account
     const checkIfMovieExistInWatchlist = () => {
         return account[0].watchlistMovies.some((movie: HeroSectionDProps) => (movie.movieDetails.id === parseInt(movieId)))
     }
 
-    console.log(movieDetails)
-
     return (
         <section className='h-full w-full'>
+
+            {/* Feedback */}
+            {feedback === 'favourite' && <Alert status='success'><AlertIcon />Data uploaded to the server. Fire on!</Alert>}
+            {feedback === 'watchlist' && <Alert status='success'><AlertIcon />Data uploaded to the server. Fire on!</Alert>}
+
             {/* hero image */}
             <div
                 style={{
@@ -61,29 +67,23 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
                         <p className='text-white text-3xl font-bold'>{movieDetails.title || movieDetails.name}</p>
                         {/* movie date */}
                         <p className='text-white text-3xl font-light'>
-                            {/* {movieDetails.runtime ?
-                               <p>({movieDetails.release_date.slice(0, 4)})</p>
-                                :
-                                <p>({movieDetails.first_air_date === '' ? 'N/A' : movieDetails.first_air_date.slice(0, 4)})</p>
-                            } */}
-
-                            {/* {movieDetails.runtime <= 0 ?
+                            {movieDetails.title ?
                                 <p>({movieDetails.release_date.length <= 0 ? 'N/A' : movieDetails.release_date.slice(0, 4)})</p>
                                 :
-                                <p>({movieDetails.first_air_date === '' ? 'N/A' : movieDetails.first_air_date.slice(0, 4)})</p>
-                            } */}
+                                <p>({movieDetails.first_air_date.length <= 0 ? 'N/A' : movieDetails.first_air_date.slice(0, 4)})</p>
+                            }
                         </p>
                     </div>
 
                     <div className='flex items-center gap-2'>
                         {/* movie date */}
                         <p className='text-white text-base'>
-                            {/* {movieDetails.runtime ? movieDetails.release_date.slice(0, 4) : movieDetails.first_air_date === '' ? 'N/A' : movieDetails.first_air_date.slice(0, 4)} */}
-                            {/* {movieDetails.runtime <= 0 ?
-                                <p>({movieDetails.release_date.length <= 0 ? 'N/A' : movieDetails.release_date.slice(0, 4)})</p>
+                            {movieDetails.title ?
+                                <p>{movieDetails.release_date.length <= 0 ? 'N/A' : movieDetails.release_date + ' (GB)'}</p>
                                 :
-                                <p>({movieDetails.first_air_date === '' ? 'N/A' : movieDetails.first_air_date.slice(0, 4)})</p>
-                            } */}
+                                <p>{movieDetails.first_air_date.length <= 0 ? 'N/A' : movieDetails.first_air_date + ' (GB)'}</p>
+                            }
+
                         </p>
                         <span className='text-white text-2xl font-bold'>&#183;</span>
                         {/* movie genres */}
@@ -109,9 +109,12 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
                         {/* add movie to favourite */}
                         <span
                             className={`h-8 w-8 flex justify-center items-center p-[1%] bg-white rounded-full ${!checkIfMovieExistInFavourites() ? 'cursor-pointer' : ''}`}
-                            onClick={() => {
-                                return !checkIfMovieExistInFavourites() ? postMovieToFavourite({ id: 1, body: newMovieDetails }) : ''
-                            }}
+                            onClick={() => !checkIfMovieExistInFavourites() &&
+                                (
+                                    void postMovieToFavourite({ id: 1, body: newMovieDetails }),
+                                    setFeedback('favourite')
+                                )
+                            }
                         >
                             {!checkIfMovieExistInFavourites() ?
                                 <Tooltip label='add to favourite'>
@@ -126,9 +129,12 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
                         {/* add movie to watchlist */}
                         <span
                             className={`h-8 w-8 flex justify-center items-center p-[1%] bg-white rounded-full ${!checkIfMovieExistInWatchlist() ? 'cursor-pointer' : ''}`}
-                            onClick={() => {
-                                return !checkIfMovieExistInWatchlist() ? postMovieToWatchlist({ id: 1, body: newMovieDetails }) : ''
-                            }}
+                            onClick={() => !checkIfMovieExistInWatchlist() &&
+                                (
+                                    void postMovieToWatchlist({ id: 1, body: newMovieDetails }),
+                                    setFeedback('watchlist')
+                                )
+                            }
                         >
                             {!checkIfMovieExistInWatchlist() ?
                                 <Tooltip label='add to watchlist'>
@@ -155,7 +161,7 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
                     </div>
                 </div>
             </div>
-        </section>
+        </section >
     );
 }
 

@@ -1,4 +1,4 @@
-import { Avatar, Divider } from '@chakra-ui/react'
+import { Avatar, Divider, Spinner } from '@chakra-ui/react'
 import heroImage from '../assets/hero-banner.jpg'
 import useScreenSize from '../features/useScreenSize'
 import { useGetAccountDetailsQuery } from '../features/Account/accountEndpoints'
@@ -28,8 +28,8 @@ const Account = () => {
         return sizeOfAvatar
     }
 
-    if (!account) return <p>missing</p>
-    if (isLoading) return <p>missing</p>
+    if (!account) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
+    if (isLoading) return <p></p>
 
     console.log(account)
     return (
@@ -53,7 +53,10 @@ const Account = () => {
                 {isActive === 'watchlist' &&
                     <div className='flex flex-wrap gap-4 p-[2%] large-phone:gap-3 small-screen:flex'>
                         {account[0].watchlistMovies.map((movie: AccountProps) => (
-                            <Link to={`/movie/${movie.movieDetails.id}`}>
+                            <Link
+                                to={`/movie/${movie.movieDetails.id}`}
+                                state={{ media: movie.movieDetails.title ? 'movie' : 'tv' }}
+                            >
                                 <div className={`h-full w-full flex flex-col`}>
                                     <img
                                         src={`https://image.tmdb.org/t/p/w500${movie.movieDetails.poster_path}`}
@@ -71,22 +74,25 @@ const Account = () => {
             </div>
             <div>
                 {isActive === 'favourite' &&
-                     <div className='flex flex-wrap gap-4 p-[2%] large-phone:gap-3 small-screen:flex'>
-                     {account[0].favouriteMovies.map((movie: AccountProps) => (
-                         <Link to={`/movie/${movie.movieDetails.id}`}>
-                             <div className={`h-full w-full flex flex-col`}>
-                                 <img
-                                     src={`https://image.tmdb.org/t/p/w500${movie.movieDetails.poster_path}`}
-                                     alt="poster"
-                                     className="h-[12rem] w-[8rem] rounded border shadow-lg small-screen:h-[20rem] small-screen:w-[13rem]"
-                                 />
-                                 <div className="flex gap-1 p-[2%] w-full">
-                                     <p className="font-semibold text-xs w-[80%] small-screen:text-sm">{movie.movieDetails.title || movie.movieDetails.name}</p>
-                                 </div>
-                             </div>
-                         </Link>
-                     ))}
-                 </div>
+                    <div className='flex flex-wrap gap-4 p-[2%] large-phone:gap-3 small-screen:flex'>
+                        {account[0].favouriteMovies.map((movie: AccountProps) => (
+                            <Link
+                                to={`/movie/${movie.movieDetails.id}`}
+                                state={{ media: movie.movieDetails.title ? 'movie' : 'tv' }}
+                            >
+                                <div className={`h-full w-full flex flex-col`}>
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w500${movie.movieDetails.poster_path}`}
+                                        alt="poster"
+                                        className="h-[12rem] w-[8rem] rounded border shadow-lg small-screen:h-[20rem] small-screen:w-[13rem]"
+                                    />
+                                    <div className="flex gap-1 p-[2%] w-full">
+                                        <p className="font-semibold text-xs w-[80%] small-screen:text-sm">{movie.movieDetails.title || movie.movieDetails.name}</p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
                 }
             </div>
         </section>

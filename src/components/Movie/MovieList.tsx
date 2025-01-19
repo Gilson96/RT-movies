@@ -20,7 +20,8 @@ type MovieListProps = {
 }
 
 const MovieList = () => {
-    const { state }: LinkStateProps = useLocation();
+    // Getting state from Link
+    const location: LinkStateProps = useLocation();
     const screenSize = useScreenSize()
     const [page, setPage] = useState<number>(1)
     const [filters, setFilters] = useState<NewFilterValuesProps>({
@@ -28,12 +29,13 @@ const MovieList = () => {
         genres: '18',
     })
     const { data: movieList, isLoading, isFetching } = useGetMovieByListConfigQuery({
-        type: state.media,
+        type: location.state.media,
         page: String(page),
         sort_by: filters.sort_by,
         genres: filters.genres,
     })
 
+    console.log(page)
 
     if (!movieList) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
@@ -41,30 +43,40 @@ const MovieList = () => {
         <section className='h-full w-full p-[3%] flex flex-col mt-[4%] bg-white'>
 
             <div className='small-screen:w-full small-screen:flex'>
-                <h1 className='text-2xl font-semibold mb-[5%] capitalize small-screen:ml-[2%]'>{state.media + 's'}</h1>
+                <h1 className='text-2xl font-semibold mb-[5%] capitalize small-screen:ml-[2%]'>{location.state.media + 's'}</h1>
 
                 {screenSize.width > 1000 &&
                     <div className='w-full justify-items-center mr-[10%]'>
                         <button
-                            className='h-[2.6rem] w-[15%] flex justify-center items-center p-[1%] border rounded-xl shadow-md font-bold'
+                            className='h-[2.6rem] w-[25%] flex justify-center items-center p-[1%] border rounded-xl shadow-md font-bold'
                             onClick={() => { setPage(prev => prev + 1) }}
                         >
                             Load More
                         </button>
                     </div>
                 }
+          
                 {screenSize.width > 1000 && <MovieListConfig
-                    type={state.media}
+                    type={location.state.media}
                     setFilters={setFilters}
                 />}
+                {screenSize.width > 1000 && page > 1 &&
+                    <div className='relative right-[33%]'>
+                        <button
+                            className='h-[2.6rem] w-[12rem] flex justify-center items-center p-[1%] border rounded-xl shadow-md font-bold'
+                            onClick={() => { setPage(prev => prev - 1) }}
+                        >
+                            Load Back
+                        </button>
+                    </div>
+                }
             </div>
-
 
             {screenSize.width < 1000 &&
                 <MovieListConfig
-                    type={state.media}
+                    type={location.state.media}
                     setFilters={setFilters}
-                />
+                />              
             }
 
             {isLoading ?
@@ -90,12 +102,21 @@ const MovieList = () => {
                                     {screenSize.width > 1000 ?
                                         <div className='flex justify-between items-center px-[2%]'>
                                             <p className='font-bold text-sm'>{movie.title || movie.name}</p>
-                                            <p className=' text-neutral-400 italic font-semibold'> </p>
+                                            <p className=' text-neutral-500 italic font-semibold'>{movie.title ?
+                                                movie.release_date.length <= 0 ? 'N/A' : movie.release_date.slice(0, 4)
+                                                :
+                                                movie.first_air_date.length <= 0 ? 'N/A' : movie.first_air_date.slice(0, 4)
+                                            }</p>
                                         </div>
                                         :
                                         <div className='h-full w-full flex flex-col justify-center items-start p-[4%]'>
                                             <p className='font-bold text-sm tablet:text-xl'>{movie.title || movie.name}</p>
-                                            <p className='text-xs text-neutral-400 italic font-semibold mb-[7%] tablet:text-lg'>Year </p>
+                                            <p className='text-xs text-neutral-400 italic font-semibold mb-[7%] tablet:text-lg'>Year {movie.title ?
+                                                movie.release_date.length <= 0 ? 'N/A' : movie.release_date.slice(0, 4)
+                                                :
+                                                movie.first_air_date.length <= 0 ? 'N/A' : movie.first_air_date.slice(0, 4)
+                                            }
+                                            </p>
                                             <p className='line-clamp-2 text-sm tablet:text-lg tablet:line-clamp-4'>{movie.overview}</p>
                                         </div>
                                     }
@@ -112,6 +133,16 @@ const MovieList = () => {
                     onClick={() => { setPage(prev => prev + 1) }}
                 >
                     Load More
+                </button>
+            }
+
+            {screenSize.width < 1000 &&
+                page > 1 &&
+                <button
+                    className='h-full w-full p-[3%] border rounded-xl mb-[2%] shadow-md font-bold text-lg small-screen:w-[30%] small-screen:mb-0 small-screen:mt-[3%] small-screen:p-[2%] '
+                    onClick={() => { setPage(prev => prev - 1) }}
+                >
+                    Go Back
                 </button>
             }
         </section>
