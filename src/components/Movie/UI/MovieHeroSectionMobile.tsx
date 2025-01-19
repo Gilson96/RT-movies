@@ -66,18 +66,17 @@ const MovieHeroSectionMobile = ({ movieDetails, movieId, poster_path }: HeroSect
             </div>
 
             {/* movieDetails title */}
-            <p className='text-white text-2xl font-semibold my-[10%] large-phone:text-3xl tablet:text-5xl tablet:mb-[6%]'>{movieDetails.title || movieDetails.name}</p>
+            <p className='flex gap-2 text-white text-2xl font-semibold my-[10%] large-phone:text-3xl tablet:text-5xl tablet:mb-[6%]'>
+                <span>{movieDetails.title || movieDetails.name}</span>
+                {movieDetails.title ?
+                    <span>({movieDetails.release_date.length <= 0 ? 'N/A' : movieDetails.release_date.slice(0, 4)})</span>
+                    :
+                    <span>({movieDetails.first_air_date.length <= 0 ? 'N/A' : movieDetails.first_air_date.slice(0, 4)})</span>
+                }
+            </p>
 
             {/* movieDetails details  */}
             <div className='h-auto w-full p-[3%] flex flex-wrap justify-center items-center bg-neutral-900 text-white gap-2'>
-                <p className='tablet:text-lg'>
-                    {movieDetails.title ?
-                        <p>({movieDetails.release_date.length <= 0 ? 'N/A' : movieDetails.release_date.slice(0, 4)})</p>
-                        :
-                        <p>({movieDetails.first_air_date.length <= 0 ? 'N/A' : movieDetails.first_air_date.slice(0, 4)})</p>
-                    }
-                </p>
-                <span className='tablet:text-lg'>&#183;</span>
                 <p className='tablet:text-lg'>
                     {movieDetails.runtime <= 0 ?
                         'N/A'
@@ -88,8 +87,7 @@ const MovieHeroSectionMobile = ({ movieDetails, movieId, poster_path }: HeroSect
                             movieDetails.number_of_seasons + ' seasons'
                     }
                 </p>
-                <span className='tablet:text-lg'>&#183;</span>
-                <p className='tablet:text-lg'>{movieDetails.vote_average.toFixed(1)}/10</p>
+                
                 <span className='tablet:text-lg'>&#183;</span>
                 {movieDetails.genres.length <= 0 ? 'N/A' :
                     movieDetails.genres.map((genre: { name: string }) => genre.name).join(',')}
@@ -98,7 +96,7 @@ const MovieHeroSectionMobile = ({ movieDetails, movieId, poster_path }: HeroSect
             <div className='h-full w-full flex justify-start items-start gap-2 mt-[2%] p-[2%]'>
                 {/* add movie to favourite */}
                 <span
-                    className={`h-8 w-8 flex justify-center items-center p-[1%] bg-white rounded-full ${!checkIfMovieExistInFavourites() ? 'cursor-pointer' : ''}`}
+                    className={`h-10 w-10 flex justify-center items-center p-[1%] bg-white rounded-full small-screen:h-8 small-screen:w-8  ${!checkIfMovieExistInFavourites() ? 'cursor-pointer' : ''}`}
                     onClick={() => !checkIfMovieExistInFavourites() &&
                         (
                             void postMovieToFavourite({ id: 1, body: newMovieDetails }),
@@ -118,7 +116,7 @@ const MovieHeroSectionMobile = ({ movieDetails, movieId, poster_path }: HeroSect
                 </span>
                 {/* add movie to watchlist */}
                 <span
-                    className={`h-8 w-8 flex justify-center items-center p-[1%] bg-white rounded-full ${!checkIfMovieExistInWatchlist() ? 'cursor-pointer' : ''}`}
+                    className={`h-10 w-10 flex justify-center items-center p-[1%] bg-white rounded-full small-screen:h-8 small-screen:w-8 ${!checkIfMovieExistInWatchlist() ? 'cursor-pointer' : ''}`}
                     onClick={() => !checkIfMovieExistInWatchlist() &&
                         (
                             void postMovieToWatchlist({ id: 1, body: newMovieDetails }),

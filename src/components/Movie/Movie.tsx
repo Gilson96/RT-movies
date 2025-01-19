@@ -10,13 +10,15 @@ const Movie = () => {
     return (
         <section className='h-full w-full'>
             <MovieHeroSection />
+            {screenSize.width < 1000 &&
+                <>
+                    <Divider />
+                    <MovieInfo />
+                </>
+            }
             <MovieActors />
             <Divider />
             <MovieRecommendations />
-            <Divider />
-            {screenSize.width < 1000 &&
-                <MovieInfo />
-            }
         </section>
     )
 }

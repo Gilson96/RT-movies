@@ -15,7 +15,7 @@ type NavigationSearchProps = {
 
 const NavigatorSearch = () => {
     const [inputValue, setInputValue] = useState<string>('hello')
-    const { data: search, isLoading } = useSearchMoviesQuery({ title: inputValue!, type: 'movie' })
+    const { data: search, isLoading } = useSearchMoviesQuery({ title: inputValue, type: 'movie' })
     const { isOpen, onOpen, onClose } = useDisclosure()
     const screenSize = useScreenSize()
 
@@ -23,7 +23,7 @@ const NavigatorSearch = () => {
         setInputValue(e.target.value)
     }
 
-    if (!search) return <div>Missing post!</div>
+    if (!search) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
     return (
         <>
@@ -68,6 +68,7 @@ const NavigatorSearch = () => {
                                         key={index}
                                         to={`/movie/${movie.id}`}
                                         onClick={onClose}
+                                        state={{media: 'movie'}}
                                     >
                                         <div className={`h-full w-full flex flex-col`}>
                                             <img
@@ -75,7 +76,7 @@ const NavigatorSearch = () => {
                                                 alt="poster"
                                                 className="h-[12rem] w-[8rem] rounded border shadow-lg small-screen:h-[15rem] small-screen:w-[10rem]"
                                             />
-                                            <div className="flex gap-1 p-[2%] w-[70%]">
+                                            <div className="flex gap-1 p-[2%] w-full">
                                                 <p className="font-bold">{movie.title}</p>
                                                 <span>&#183;</span>
                                                 <p>{movie.release_date.slice(0, 4)}</p>
