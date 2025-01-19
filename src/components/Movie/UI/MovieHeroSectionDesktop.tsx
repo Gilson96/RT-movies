@@ -61,22 +61,29 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
                         <p className='text-white text-3xl font-bold'>{movieDetails.title || movieDetails.name}</p>
                         {/* movie date */}
                         <p className='text-white text-3xl font-light'>
-                            {movieDetails.runtime <= 0 ?
+                            {/* {movieDetails.runtime ?
+                               <p>({movieDetails.release_date.slice(0, 4)})</p>
+                                :
+                                <p>({movieDetails.first_air_date === '' ? 'N/A' : movieDetails.first_air_date.slice(0, 4)})</p>
+                            } */}
+
+                            {/* {movieDetails.runtime <= 0 ?
                                 <p>({movieDetails.release_date.length <= 0 ? 'N/A' : movieDetails.release_date.slice(0, 4)})</p>
                                 :
                                 <p>({movieDetails.first_air_date === '' ? 'N/A' : movieDetails.first_air_date.slice(0, 4)})</p>
-                            }
+                            } */}
                         </p>
                     </div>
 
                     <div className='flex items-center gap-2'>
                         {/* movie date */}
                         <p className='text-white text-base'>
-                            {movieDetails.runtime <= 0 ?
+                            {/* {movieDetails.runtime ? movieDetails.release_date.slice(0, 4) : movieDetails.first_air_date === '' ? 'N/A' : movieDetails.first_air_date.slice(0, 4)} */}
+                            {/* {movieDetails.runtime <= 0 ?
                                 <p>({movieDetails.release_date.length <= 0 ? 'N/A' : movieDetails.release_date.slice(0, 4)})</p>
                                 :
                                 <p>({movieDetails.first_air_date === '' ? 'N/A' : movieDetails.first_air_date.slice(0, 4)})</p>
-                            }
+                            } */}
                         </p>
                         <span className='text-white text-2xl font-bold'>&#183;</span>
                         {/* movie genres */}

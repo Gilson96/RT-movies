@@ -1,5 +1,6 @@
 {
   "name": "react_movies_typescript",
+  "homepage": "https://Gilson96.github.io/RT-movies/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.10.4",
@@ -17,6 +20,7 @@
     "@reduxjs/toolkit": "^2.5.0",
     "animate.css": "^4.1.1",
     "framer-motion": "^11.15.0",
+    "gh-pages": "^6.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",

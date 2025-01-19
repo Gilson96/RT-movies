@@ -34,10 +34,8 @@ const MovieList = () => {
         genres: filters.genres,
     })
 
-    console.log(movieList)
 
-    if (!movieList) return <p>missing</p>
-    if (isLoading) return <p>missing</p>
+    if (!movieList) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
     return (
         <section className='h-full w-full p-[3%] flex flex-col mt-[4%] bg-white'>
@@ -78,11 +76,11 @@ const MovieList = () => {
                             <Spinner />
                         </div>
                         :
-                        movieList.results.filter((movie: MovieListProps) => movie.poster_path !== null).map((movie: MovieListProps, index) => (
+                        movieList.results.map((movie: MovieListProps, index) => (
                             <Link
                                 to={`/movie/${movie.id}`}
-                                state={{ 
-                                    media: movie.title ? 'movie' : 'tv', 
+                                state={{
+                                    media: movie.title ? 'movie' : 'tv',
                                     poster_path: movie.poster_path
                                 }}
                             >
@@ -92,12 +90,12 @@ const MovieList = () => {
                                     {screenSize.width > 1000 ?
                                         <div className='flex justify-between items-center px-[2%]'>
                                             <p className='font-bold text-sm'>{movie.title || movie.name}</p>
-                                            <p className=' text-neutral-400 italic font-semibold'> {movie.title ? movie.release_date.slice(0, 4) : movie.first_air_date.slice(0, 4)}</p>
+                                            <p className=' text-neutral-400 italic font-semibold'> </p>
                                         </div>
                                         :
                                         <div className='h-full w-full flex flex-col justify-center items-start p-[4%]'>
                                             <p className='font-bold text-sm tablet:text-xl'>{movie.title || movie.name}</p>
-                                            <p className='text-xs text-neutral-400 italic font-semibold mb-[7%] tablet:text-lg'>Year {movie.title ? movie.release_date.slice(0, 4) : movie.first_air_date.slice(0, 4)}</p>
+                                            <p className='text-xs text-neutral-400 italic font-semibold mb-[7%] tablet:text-lg'>Year </p>
                                             <p className='line-clamp-2 text-sm tablet:text-lg tablet:line-clamp-4'>{movie.overview}</p>
                                         </div>
                                     }
