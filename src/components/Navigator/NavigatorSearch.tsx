@@ -62,26 +62,22 @@ const NavigatorSearch = () => {
                                 <Spinner />
                             </div>
                             :
-                            <div className='h-full w-full flex flex-wrap justify-around'>
-                                {search.results.filter((movie: NavigationSearchProps) => movie.poster_path !== null).map((movie: NavigationSearchProps, index: number) => (
+                            <div className='h-full flex flex-wrap gap-2'>
+                                {search.results.map((movie: NavigationSearchProps, index: number) => (
+
                                     <Link
                                         key={index}
                                         to={`/movie/${movie.id}`}
                                         onClick={onClose}
-                                        state={{media: 'movie'}}
+                                        state={{ media: 'movie' }}
+                                        className=' w-[30%]'
                                     >
-                                        <div className={`h-full w-full flex flex-col`}>
-                                            <img
-                                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                                alt="poster"
-                                                className="h-[12rem] w-[8rem] rounded border shadow-lg small-screen:h-[15rem] small-screen:w-[10rem]"
-                                            />
-                                            <div className="flex gap-1 p-[2%] w-full">
-                                                <p className="font-bold">{movie.title}</p>
-                                                <span>&#183;</span>
-                                                <p>{movie.release_date.slice(0, 4)}</p>
-                                            </div>
-                                        </div>
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                            alt="poster"
+                                            className="h-[12rem] w-[8rem] rounded border shadow-lg small-screen:h-[15rem] small-screen:w-[10rem]"
+                                        />
+                                        <p className='text-xs font-bold'>{movie.title}</p>
                                     </Link>
                                 ))}
                             </div>
@@ -94,7 +90,7 @@ const NavigatorSearch = () => {
                         </Button>
                     </ModalFooter>
                 </ModalContent>
-            </Modal>
+            </Modal >
         </>
     )
 }
