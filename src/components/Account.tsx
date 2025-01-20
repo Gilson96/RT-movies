@@ -1,7 +1,7 @@
 import { Avatar, Divider, Spinner, Tooltip, Alert, AlertIcon } from '@chakra-ui/react'
 import heroImage from '../assets/hero-banner.jpg'
 import useScreenSize from '../features/useScreenSize'
-import { useGetAccountDetailsQuery, useRemoveFavouriteMoviesMutation } from '../features/Account/accountEndpoints'
+import { useGetAccountDetailsQuery, useRemoveFavouriteMoviesMutation, useRemoveWatchlistMoviesMutation } from '../features/Account/accountEndpoints'
 import { useState } from 'react'
 import { Link } from 'react-router'
 import Toggle from './UI/Toggle'
@@ -26,6 +26,7 @@ const Account = () => {
     const screenSize = useScreenSize()
     const { data: account, isLoading } = useGetAccountDetailsQuery([])
     const [removeMovieFromFavourites] = useRemoveFavouriteMoviesMutation()
+    const [removeMovieFromWatchlist] = useRemoveWatchlistMoviesMutation()
     const [feedback, setFeedback] = useState(false)
 
     const handleAvatarSize = () => {
@@ -101,8 +102,9 @@ const Account = () => {
                                             <button
                                                 className='flex items-center'
                                                 onClick={() => (
-                                                    void removeMovieFromFavourites({ id: 1, movieId: movie.id }),
-                                                    setFeedback(true)
+                                                    void removeMovieFromWatchlist({ id: 1, movieId: movie.id }),
+                                                    setFeedback(true),
+                                                    scrollTo({ top: 0, behavior: 'smooth' })
                                                 )}
                                             >
                                                 <XCircleIcon className='h-4 w-4 text-red-500 small-screen:h-7 small-screen:w-7' />
@@ -164,7 +166,8 @@ const Account = () => {
                                                 className='flex items-center'
                                                 onClick={() => (
                                                     void removeMovieFromFavourites({ id: 1, movieId: movie.id }),
-                                                    setFeedback(true)
+                                                    setFeedback(true),
+                                                    scrollTo({ top: 0, behavior: 'smooth' })
                                                 )}
                                             >
                                                 <XCircleIcon className='h-4 w-4 text-red-500 small-screen:h-7 small-screen:w-7' />
