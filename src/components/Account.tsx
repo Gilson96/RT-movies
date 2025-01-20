@@ -1,19 +1,24 @@
-import { Avatar, Divider, Spinner } from '@chakra-ui/react'
+import { Avatar, Divider, Spinner, Tooltip } from '@chakra-ui/react'
 import heroImage from '../assets/hero-banner.jpg'
 import useScreenSize from '../features/useScreenSize'
-import { useGetAccountDetailsQuery } from '../features/Account/accountEndpoints'
+import { useGetAccountDetailsQuery, useRemoveFavouriteMoviesMutation } from '../features/Account/accountEndpoints'
+
 import { useState } from 'react'
 import { Link } from 'react-router'
 import Toggle from './UI/Toggle'
+import { PlusCircleIcon, XCircleIcon } from '@heroicons/react/24/solid'
 
 type AccountProps = {
+    id: number;
     movieDetails: {
         id: number;
         title: string;
         release_date: string;
         poster_path: string;
         name: string;
-        runtime: number
+        runtime: number;
+        first_air_date: string;
+        overview: string;
     }
 }
 
@@ -21,6 +26,7 @@ const Account = () => {
     const [isActive, setIsActive] = useState('favourite')
     const screenSize = useScreenSize()
     const { data: account, isLoading } = useGetAccountDetailsQuery([])
+    const [removeMovieFromFavourites] = useRemoveFavouriteMoviesMutation()
 
     const handleAvatarSize = () => {
         let sizeOfAvatar: string = 'lg';
@@ -51,46 +57,114 @@ const Account = () => {
             <Divider />
             <div>
                 {isActive === 'watchlist' &&
-                    <div className='flex flex-wrap gap-4 p-[2%] large-phone:gap-3 small-screen:flex'>
-                        {account[0].watchlistMovies.map((movie: AccountProps) => (
-                            <Link
-                                to={`/movie/${movie.movieDetails.id}`}
-                                state={{ media: movie.movieDetails.title ? 'movie' : 'tv' }}
-                            >
-                                <div className={`h-full w-full flex flex-col`}>
-                                    <img
-                                        src={`https://image.tmdb.org/t/p/w500${movie.movieDetails.poster_path}`}
-                                        alt="poster"
-                                        className="h-[12rem] w-[8rem] rounded border shadow-lg small-screen:h-[20rem] small-screen:w-[13rem]"
-                                    />
-                                    <div className="flex gap-1 p-[2%] w-full">
-                                        <p className="font-semibold text-xs small-screen:text-sm">{movie.movieDetails.title || movie.movieDetails.name}</p>
+                    <div className='flex flex-col gap-2 p-[2%]'>
+                        {account[0].watchlistMovies.map((movie: AccountProps, index) => (
+                            <div key={index} className='h-[8rem] w-full flex justify-between border rounded shadow tablet:h-[10rem] small-screen:h-[15rem]'>
+                                {/* image poster */}
+                                <img
+                                    className={`h-full ${movie.movieDetails.poster_path === null && 'bg-neutral-600'}`}
+                                    src={movie.movieDetails.poster_path !== null ? `https://image.tmdb.org/t/p/w780/${movie.movieDetails.poster_path}` : ''}
+                                />
+
+                                <div className='h-full w-full flex flex-col justify-between p-[2%]'>
+
+                                    {/* movie title & year */}
+                                    <div>
+                                        <p className='text-xs font-bold small-screen:text-base'>{movie.movieDetails.title || movie.movieDetails.name}</p>
+                                        <p className='text-xs text-neutral-500 font-semibold italic small-screen:text-base'>Year {movie.movieDetails.title ?
+                                            movie.movieDetails.release_date === "" ? 'N/A' : movie.movieDetails.release_date.slice(0, 4)
+                                            :
+                                            movie.movieDetails.first_air_date === "" ? 'N/A' : movie.movieDetails.first_air_date.slice(0, 4)
+                                        }
+                                        </p>
+                                    </div>
+
+                                    <p className='text-xs line-clamp-2 tablet:line-clamp-4 small-screen:text-base'>{movie.movieDetails.overview}</p>
+
+                                    <Divider />
+                                    <div className='h-[1rem] flex items-end gap-2'>
+
+                                        <Tooltip label='More details'>
+                                            <Link
+                                                to={`/movie/${movie.movieDetails.id}`}
+                                                state={{ media: movie.movieDetails.title ? 'movie' : 'tv' }}
+                                                className='flex items-center'
+                                            >
+                                                <PlusCircleIcon className='h-4 w-4 text-neutral-400 small-screen:h-7 small-screen:w-7' />
+                                                <p className='text-xs font-semibold small-screen:text-base'>More details</p>
+                                            </Link>
+                                        </Tooltip>
+
+                                        <Tooltip label='Remove'>
+                                            <button
+                                                className='flex items-center'
+                                                onClick={() => void removeMovieFromFavourites({ id: 1, movieId: movie.id })}
+                                            >
+                                                <XCircleIcon className='h-4 w-4 text-red-500 small-screen:h-7 small-screen:w-7' />
+                                                <p className='text-xs font-semibold small-screen:text-base'>Remove</p>
+                                            </button>
+                                        </Tooltip>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 }
             </div>
+
+
             <div>
                 {isActive === 'favourite' &&
-                    <div className='flex flex-wrap gap-4 p-[2%] large-phone:gap-3 small-screen:flex'>
-                        {account[0].favouriteMovies.map((movie: AccountProps) => (
-                            <Link
-                                to={`/movie/${movie.movieDetails.id}`}
-                                state={{ media: movie.movieDetails.title ? 'movie' : 'tv' }}
-                            >
-                                <div className={`h-full w-full flex flex-col`}>
-                                    <img
-                                        src={`https://image.tmdb.org/t/p/w500${movie.movieDetails.poster_path}`}
-                                        alt="poster"
-                                        className="h-[12rem] w-[8rem] rounded border shadow-lg small-screen:h-[20rem] small-screen:w-[13rem]"
-                                    />
-                                    <div className="flex gap-1 p-[2%] w-full">
-                                        <p className="font-semibold text-xs w-[80%] small-screen:text-sm">{movie.movieDetails.title || movie.movieDetails.name}</p>
+                    <div className='flex flex-col gap-2 p-[2%]'>
+                        {account[0].favouriteMovies.map((movie: AccountProps, index) => (
+                            <div key={index} className='h-[8rem] w-full flex justify-between border rounded shadow tablet:h-[10rem] small-screen:h-[15rem]'>
+                                {/* image poster */}
+                                <img
+                                    className={`h-full ${movie.movieDetails.poster_path === null && 'bg-neutral-600'}`}
+                                    src={movie.movieDetails.poster_path !== null ? `https://image.tmdb.org/t/p/w780/${movie.movieDetails.poster_path}` : ''}
+                                />
+
+                                <div className='h-full w-full flex flex-col justify-between p-[2%]'>
+
+                                    {/* movie title & year */}
+                                    <div>
+                                        <p className='text-xs font-bold small-screen:text-base'>{movie.movieDetails.title || movie.movieDetails.name}</p>
+                                        <p className='text-xs text-neutral-500 font-semibold italic small-screen:text-base'>Year {movie.movieDetails.title ?
+                                            movie.movieDetails.release_date === "" ? 'N/A' : movie.movieDetails.release_date.slice(0, 4)
+                                            :
+                                            movie.movieDetails.first_air_date === "" ? 'N/A' : movie.movieDetails.first_air_date.slice(0, 4)
+                                        }
+                                        </p>
+                                    </div>
+
+                                    <p className='text-xs line-clamp-2 tablet:line-clamp-4 small-screen:text-base'>{movie.movieDetails.overview}</p>
+
+                                    <Divider />
+                                    <div className='h-[1rem] flex items-end gap-2'>
+
+                                        <Tooltip label='More details'>
+                                            <Link
+                                                to={`/movie/${movie.movieDetails.id}`}
+                                                state={{ media: movie.movieDetails.title ? 'movie' : 'tv' }}
+                                                className='flex items-center'
+                                            >
+                                                <PlusCircleIcon className='h-4 w-4 text-neutral-400 small-screen:h-7 small-screen:w-7' />
+                                                <p className='text-xs font-semibold small-screen:text-base'>More details</p>
+                                            </Link>
+                                        </Tooltip>
+
+                                        <Tooltip label='Remove'>
+                                            <button
+                                                className='flex items-center'
+                                                onClick={() => void removeMovieFromFavourites({ id: 1, movieId: movie.id })}
+                                            >
+                                                <XCircleIcon className='h-4 w-4 text-red-500 small-screen:h-7 small-screen:w-7' />
+                                                <p className='text-xs font-semibold small-screen:text-base'>Remove</p>
+                                            </button>
+                                        </Tooltip>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 }

@@ -23,8 +23,8 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
     const newMovieDetails = { id: Math.floor(Math.random() * 101), movieDetails }
 
     if (!account) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
-    if (isLoading) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
     
+    if (isLoading) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
     // checks if movie exist in account
     const checkIfMovieExistInFavourites = () => {
         return account[0].favouriteMovies.some((movie: HeroSectionDProps) => (movie.movieDetails.id === parseInt(movieId)))

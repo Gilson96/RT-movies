@@ -40,7 +40,7 @@ const SliderToggle = ({
                 }}
             >
 
-                <span className="relative z-10">Watchlist</span>
+                <span className="relative z-10 small-screen:text-base">Watchlist</span>
             </button>
             <button
                 className={`${TOGGLE_CLASSES} ${isActive === "favourite" ? "text-white" : "text-slate-800"
@@ -49,7 +49,7 @@ const SliderToggle = ({
                     setIsActive("favourite");
                 }}
             >
-                <span className="relative z-10">Favourite</span>
+                <span className="relative z-10 small-screen:text-base">Favourite</span>
             </button>
             <div
                 className={`absolute inset-0 z-0 flex ${isActive === "favourite" ? "justify-end" : "justify-start"

@@ -35,8 +35,6 @@ const MovieList = () => {
         genres: filters.genres,
     })
 
-    console.log(movieList)
-
     if (!movieList) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
     return (
