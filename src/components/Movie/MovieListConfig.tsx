@@ -28,7 +28,6 @@ const MovieListConfig = ({ setFilters, type }: MovieListConfigProps) => {
         <section className='h-full w-full flex flex-col justify-center items-center gap-4 small-screen:w-[15%] small-screen:h-auto small-screen:absolute small-screen:right-[4%] '>
             <AccordionBox
                 title='Filters'
-
             >
                 <div className='h-full w-full flex flex-col gap-2'>
                     <SortByConfig
@@ -38,6 +37,7 @@ const MovieListConfig = ({ setFilters, type }: MovieListConfigProps) => {
                     />
                     <GenresConfig
                         setGenre={setConfigGenre}
+                        type={type}
                     />
                     {screenSize.width > 1000 && <button
                         className='h-full w-full p-[3%] border rounded-xl mb-[2%] shadow-md font-bold text-lg'
@@ -84,15 +84,15 @@ const SortByConfig = ({ type, sort_by, setSort_by }: SortByConfigProps) => {
 
 type GenresConfigProps = {
     setGenre: Dispatch<SetStateAction<string>>;
+    type: string
 }
 
-const GenresConfig = ({ setGenre }: GenresConfigProps) => {
+const GenresConfig = ({ setGenre, type }: GenresConfigProps) => {
     const [genreName, setGenreName] = useState<string>('Action')
-    const { data: genresList, isLoading } = useGetMovieGenreListQuery('movie')
+    const { data: genresList, isLoading } = useGetMovieGenreListQuery(type)
 
     if (!genresList) return <p>no</p>
     if (isLoading) return <p>isLoading</p>
-    console.log(genresList)
     return (
         <>
             <DropdownMenu title={genreName}>
