@@ -8,17 +8,10 @@
 * [Features](#features)
 * [Screenshots](#screenshots)
 * [Setup](#setup)
-* [Usage](#usage)
 
 ## General Information
-- A website that offers detailed
-information about movies, including plot
-summaries, cast and crew details,
-ratings, reviews, and release dates. It
-serves as a comprehensive resource for
-movie enthusiasts to discover and
-explore films across various genres.
-
+- A website that offers detailed information about movies, including plot summaries, cast and crew details, ratings, reviews, and release dates.
+- It serves as a comprehensive resource for movie enthusiasts to discover and explore films across various genres.
 
 ## Technologies Used
 - React - version 18.0
@@ -39,12 +32,16 @@ List the ready features here:
 - Remove movie or TV series to account
 
 ## Screenshots
-![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_home.png)
-![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_List.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Home.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Homee.png)
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Search.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_MovieList.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_TvList.png)
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Movie.png)
-![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Actors.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Actor.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Recommendation.png)
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Account.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Accontt.png)
 
 ## Setup
 1. Create a local directory on your machine
