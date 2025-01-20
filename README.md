@@ -34,13 +34,13 @@ List the ready features here:
 ## Screenshots
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Home.png)
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Homee.png)
-![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Search.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Searchh.png)
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_MovieList.png)
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_TvList.png)
-![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Movie.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Moviee.png)
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Actor.png)
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Recommendation.png)
-![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Account.png)
+![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_AAccount.png)
 ![Example screenshot](https://github.com/Gilson96/RT-movies/blob/master/src/assets/Screenshot_Accontt.png)
 
 ## Setup
