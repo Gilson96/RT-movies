@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 const Footer = () => {
     return (
-        <footer className="h-full w-full flex justify-between items-center p-[2%] bg-black text-white">
+        <footer className="h-[3rem] w-full flex justify-between items-center p-[2%] bg-black text-white small-screen:h-[5rem]">
             <p className='h-full flex items-center border-r-2 pr-2 border-neutral-400'>
                 <h2
                     className='hidden text-xs small-screen:block small-screen:font-bold small-screen:text-2xl'>RT-Movies</h2>
