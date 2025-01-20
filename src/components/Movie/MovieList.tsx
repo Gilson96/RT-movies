@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { useGetMovieByListConfigQuery } from '../../features/Movies/movieGenresEndpoints';
 import MovieListConfig, { NewFilterValuesProps } from './MovieListConfig';
-import { Spinner } from '@chakra-ui/react';
+import { Spinner} from '@chakra-ui/react';
 import useScreenSize from '../../features/useScreenSize';
 
 type LinkStateProps = {

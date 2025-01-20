@@ -77,7 +77,6 @@ type MoviesShowCaseSectionProps = {
 export const MoviesShowCaseSection = ({ list, slidesPerView }: { list: string, slidesPerView: number }) => {
     const { data: movies, isLoading } = useGetMovieByListQuery({ list: list, type: 'movie' })
 
-
     return (
 
         <section className="h-full w-full p-[3%] mt-[8%] tablet:mt-0 small-screen:px-[3%] small-screen:py-[1%]">
@@ -120,17 +119,16 @@ export const MoviesShowCaseSection = ({ list, slidesPerView }: { list: string, s
                                         state={{ media: 'movie' }}
                                     >
                                         <div className={`h-full w-full flex flex-col`}>
-                                            <Tooltip className="relative bottom-[8rem]" label={movie.title}>
+                                            <Tooltip className="relative " label={movie.title}>
                                                 <img
                                                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                                     alt="poster"
                                                     className="h-[16rem] w-[11rem] rounded border shadow-lg"
                                                 />
                                             </Tooltip>
-                                            <div className="flex gap-1 p-[2%] w-[70%]">
-                                                <p className="font-bold truncate">{movie.title}</p>
-                                                <span>&#183;</span>
-                                                <p>{movie.release_date.slice(0, 4)}</p>
+                                            <div className="flex gap-1 p-[2%]">
+                                                <p className="w-[70%] text-sm font-bold truncate">{movie.title}</p>
+                                                <p className="text-sm">{movie.release_date.slice(0, 4)}</p>
                                             </div>
                                         </div>
                                     </Link>
