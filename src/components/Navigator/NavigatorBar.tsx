@@ -1,4 +1,4 @@
-import { Avatar } from '@chakra-ui/react'
+import { Avatar, Tooltip } from '@chakra-ui/react'
 import { Link } from 'react-router'
 import NavigatorMenu from './NavigatorMenu'
 import useScreenSize from "../../features/useScreenSize";
@@ -34,7 +34,7 @@ const NavigatorBar = () => {
                             state={{ media: 'movie' }}
                         >
                             <p className='text-xl text-neutral-800 font-semibold hover-underline-animation left'>Movies</p>
-                            
+
                         </Link>
                         <Link
                             to={'movie/movieList'}
@@ -55,7 +55,9 @@ const NavigatorBar = () => {
 
                 <div className='flex items-center'>
                     <Link to={'/account'}>
-                        <Avatar size={handleCarouselBreakpoints()} />
+                        <Tooltip label='Account'>
+                            <Avatar size={handleCarouselBreakpoints()} />
+                        </Tooltip>
                     </Link>
 
                     {/* Menu in mobile view */}
