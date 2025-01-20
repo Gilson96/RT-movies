@@ -27,6 +27,7 @@ const Account = () => {
     const { data: account, isLoading } = useGetAccountDetailsQuery([])
     const [removeMovieFromFavourites] = useRemoveFavouriteMoviesMutation()
     const [feedback, setFeedback] = useState(false)
+
     const handleAvatarSize = () => {
         let sizeOfAvatar: string = 'lg';
         if (screenSize.width > 700) return sizeOfAvatar = '2xl'
@@ -89,6 +90,7 @@ const Account = () => {
                                                 to={`/movie/${movie.movieDetails.id}`}
                                                 state={{ media: movie.movieDetails.title ? 'movie' : 'tv' }}
                                                 className='flex items-center'
+                                                onClick={() => { scrollTo({ top: 0, behavior: 'smooth' }) }}
                                             >
                                                 <PlusCircleIcon className='h-4 w-4 text-neutral-400 small-screen:h-7 small-screen:w-7' />
                                                 <p className='text-xs font-semibold small-screen:text-base'>More details</p>
@@ -150,6 +152,7 @@ const Account = () => {
                                                 to={`/movie/${movie.movieDetails.id}`}
                                                 state={{ media: movie.movieDetails.title ? 'movie' : 'tv' }}
                                                 className='flex items-center'
+                                                onClick={() => { scrollTo({ top: 0, behavior: 'smooth' }) }}
                                             >
                                                 <PlusCircleIcon className='h-4 w-4 text-neutral-400 small-screen:h-7 small-screen:w-7' />
                                                 <p className='text-xs font-semibold small-screen:text-base'>More details</p>
