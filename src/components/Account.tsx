@@ -1,8 +1,7 @@
-import { Avatar, Divider, Spinner, Tooltip } from '@chakra-ui/react'
+import { Avatar, Divider, Spinner, Tooltip, Alert, AlertIcon } from '@chakra-ui/react'
 import heroImage from '../assets/hero-banner.jpg'
 import useScreenSize from '../features/useScreenSize'
 import { useGetAccountDetailsQuery, useRemoveFavouriteMoviesMutation } from '../features/Account/accountEndpoints'
-
 import { useState } from 'react'
 import { Link } from 'react-router'
 import Toggle from './UI/Toggle'
@@ -27,7 +26,7 @@ const Account = () => {
     const screenSize = useScreenSize()
     const { data: account, isLoading } = useGetAccountDetailsQuery([])
     const [removeMovieFromFavourites] = useRemoveFavouriteMoviesMutation()
-
+    const [feedback, setFeedback] = useState(false)
     const handleAvatarSize = () => {
         let sizeOfAvatar: string = 'lg';
         if (screenSize.width > 700) return sizeOfAvatar = '2xl'
@@ -37,7 +36,6 @@ const Account = () => {
     if (!account) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
     if (isLoading) return <p></p>
 
-    console.log(account)
     return (
         <section>
             <div
@@ -53,6 +51,8 @@ const Account = () => {
             <div className='w-full my-[2%]'>
                 <Toggle isActive={isActive} setIsActive={setIsActive} />
             </div>
+
+            {feedback && <Alert status='success'><AlertIcon />Data was removed. Refresh!</Alert>}
 
             <Divider />
             <div>
@@ -98,7 +98,10 @@ const Account = () => {
                                         <Tooltip label='Remove'>
                                             <button
                                                 className='flex items-center'
-                                                onClick={() => void removeMovieFromFavourites({ id: 1, movieId: movie.id })}
+                                                onClick={() => (
+                                                    void removeMovieFromFavourites({ id: 1, movieId: movie.id }),
+                                                    setFeedback(true)
+                                                )}
                                             >
                                                 <XCircleIcon className='h-4 w-4 text-red-500 small-screen:h-7 small-screen:w-7' />
                                                 <p className='text-xs font-semibold small-screen:text-base'>Remove</p>
@@ -156,7 +159,10 @@ const Account = () => {
                                         <Tooltip label='Remove'>
                                             <button
                                                 className='flex items-center'
-                                                onClick={() => void removeMovieFromFavourites({ id: 1, movieId: movie.id })}
+                                                onClick={() => (
+                                                    void removeMovieFromFavourites({ id: 1, movieId: movie.id }),
+                                                    setFeedback(true)
+                                                )}
                                             >
                                                 <XCircleIcon className='h-4 w-4 text-red-500 small-screen:h-7 small-screen:w-7' />
                                                 <p className='text-xs font-semibold small-screen:text-base'>Remove</p>

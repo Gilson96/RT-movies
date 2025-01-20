@@ -39,8 +39,8 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
         <section className='h-full w-full'>
 
             {/* Feedback */}
-            {feedback === 'favourite' && <Alert status='success'><AlertIcon />Data uploaded to the server. Fire on!</Alert>}
-            {feedback === 'watchlist' && <Alert status='success'><AlertIcon />Data uploaded to the server. Fire on!</Alert>}
+            {feedback === 'favourite' && <Alert status='success'><AlertIcon />Data uploaded to your account. Refresh!</Alert>}
+            {feedback === 'watchlist' && <Alert status='success'><AlertIcon />Data uploaded to your account. Refresh!</Alert>}
 
             {/* hero image */}
             <div
