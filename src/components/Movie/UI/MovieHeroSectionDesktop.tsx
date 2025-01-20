@@ -23,8 +23,8 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
     const newMovieDetails = { id: Math.floor(Math.random() * 101), movieDetails }
 
     if (!account) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
-    
     if (isLoading) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
+
     // checks if movie exist in account
     const checkIfMovieExistInFavourites = () => {
         return account[0].favouriteMovies.some((movie: HeroSectionDProps) => (movie.movieDetails.id === parseInt(movieId)))
@@ -34,6 +34,15 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
     const checkIfMovieExistInWatchlist = () => {
         return account[0].watchlistMovies.some((movie: HeroSectionDProps) => (movie.movieDetails.id === parseInt(movieId)))
     }
+
+    const convertMinsToHrsMins = (minutes: number) => {
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60
+
+        return `${hours}h ${mins}m `
+    }
+
+    console.log(convertMinsToHrsMins(98))
 
     return (
         <section className='h-full w-full'>
@@ -98,7 +107,7 @@ const MovieHeroSectionDesktop = ({ movieDetails, movieId, poster_path }: HeroSec
                                 'N/A'
                                 :
                                 movieDetails.runtime ?
-                                    movieDetails.runtime + 'min'
+                                    convertMinsToHrsMins(movieDetails.runtime)
                                     :
                                     movieDetails.number_of_seasons + ' seasons'
                             }

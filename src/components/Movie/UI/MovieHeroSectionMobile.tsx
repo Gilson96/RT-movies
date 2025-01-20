@@ -23,7 +23,7 @@ const MovieHeroSectionMobile = ({ movieDetails, movieId, poster_path }: HeroSect
     // object to add the movie into my API
     const newMovieDetails = { id: Math.floor(Math.random() * 101), movieDetails }
 
-    if (isLoading) return <p></p>
+    if (isLoading) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
     if (!account) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
     // checks if movie exist in account
@@ -35,11 +35,18 @@ const MovieHeroSectionMobile = ({ movieDetails, movieId, poster_path }: HeroSect
         return account[0].watchlistMovies.some((movie: HeroSectionMProps) => (movie.movieDetails.id === parseInt(movieId)))
     }
 
+    const convertMinsToHrsMins = (minutes: number) => {
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60
+
+        return `${hours}h ${mins}m `
+    }
+
     return (
         <section className='h-full w-full flex flex-col justify-center items-center bg-neutral-800 text-sm'>
             {/* Feedback */}
-            {feedback === 'favourite' && <Alert status='success'><AlertIcon />Data uploaded to the server. Fire on!</Alert>}
-            {feedback === 'watchlist' && <Alert status='success'><AlertIcon />Data uploaded to the server. Fire on!</Alert>}
+            {feedback === 'favourite' && <Alert status='success'><AlertIcon />Data uploaded to your account. Refresh!</Alert>}
+            {feedback === 'watchlist' && <Alert status='success'><AlertIcon />Data uploaded to your account. Refresh!</Alert>}
 
             {/* hero image */}
             <div
@@ -82,12 +89,12 @@ const MovieHeroSectionMobile = ({ movieDetails, movieId, poster_path }: HeroSect
                         'N/A'
                         :
                         movieDetails.runtime ?
-                            movieDetails.runtime + 'min'
+                            convertMinsToHrsMins(movieDetails.runtime)
                             :
                             movieDetails.number_of_seasons + ' seasons'
                     }
                 </p>
-                
+
                 <span className='tablet:text-lg'>&#183;</span>
                 {movieDetails.genres.length <= 0 ? 'N/A' :
                     movieDetails.genres.map((genre: { name: string }) => genre.name).join(',')}

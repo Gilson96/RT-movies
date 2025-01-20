@@ -97,16 +97,16 @@ const MovieList = () => {
                                 <div key={index} className='h-[8rem] w-full flex my-[5%] justify-between border rounded shadow tablet:h-[19rem] small-screen:border-none small-screen:h-[20rem] small-screen:w-[14rem] small-screen:flex small-screen:flex-col small-screen:rounded-xl small-screen:my-[8%]'>
                                     <img
                                         className={`h-full small-screen:w-full small-screen:rounded-xl ${movie.poster_path === null && 'bg-neutral-600'}`}
-                                        src={movie.poster_path !== null?  `https://image.tmdb.org/t/p/w780/${movie.poster_path}` : ''}
+                                        src={movie.poster_path !== null ? `https://image.tmdb.org/t/p/w780/${movie.poster_path}` : ''}
                                     />
 
                                     {screenSize.width > 1000 ?
                                         <div className='flex justify-between items-center px-[2%]'>
                                             <p className='font-bold text-sm'>{movie.title || movie.name}</p>
                                             <p className=' text-neutral-500 italic font-semibold'>{movie.title ?
-                                                movie.release_date !== "" ? 'N/A' : movie.release_date.slice(0, 4)
+                                                movie.release_date === "" ? 'N/A' : movie.release_date.slice(0, 4)
                                                 :
-                                                movie.first_air_date !== "" ? 'N/A' : movie.first_air_date.slice(0, 4)
+                                                movie.first_air_date === "" ? 'N/A' : movie.first_air_date.slice(0, 4)
                                             }</p>
                                         </div>
                                         :
@@ -131,7 +131,7 @@ const MovieList = () => {
             {screenSize.width < 1000 &&
                 <button
                     className='h-full w-full p-[3%] border rounded-xl mb-[2%] shadow-md font-bold text-lg small-screen:w-[30%] small-screen:mb-0 small-screen:mt-[3%] small-screen:p-[2%] '
-                    onClick={() => { setPage(prev => prev + 1) }}
+                    onClick={() => { setPage(prev => prev + 1); scrollTo({ top: 0, behavior: 'smooth' }) }}
                 >
                     Load More
                 </button>
@@ -141,7 +141,7 @@ const MovieList = () => {
                 page > 1 &&
                 <button
                     className='h-full w-full p-[3%] border rounded-xl mb-[2%] shadow-md font-bold text-lg small-screen:w-[30%] small-screen:mb-0 small-screen:mt-[3%] small-screen:p-[2%] '
-                    onClick={() => { setPage(prev => prev - 1) }}
+                    onClick={() => { setPage(prev => prev - 1); scrollTo({ top: 0, behavior: 'smooth' }) }}
                 >
                     Go Back
                 </button>

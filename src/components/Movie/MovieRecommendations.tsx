@@ -20,14 +20,15 @@ type LinkStateProps = {
 const MovieRecommendations = () => {
     // Getting id from url
     const { id } = useParams<MovieRecommendationsProps>();
-    const { state }: LinkStateProps = useLocation();
+    // Getting state from Link
+    const location: LinkStateProps = useLocation();
 
     // parseInt(id!) < ! > => makes variable non-nullable
     // Fix string | undefined error
-    const { data: recommendations, isLoading } = useGetMovieRecommendationsQuery({ id: parseInt(id!), type: state.media })
+    const { data: recommendations, isLoading } = useGetMovieRecommendationsQuery({ id: parseInt(id!), type: location.state.media })
     const screenSize = useScreenSize()
 
-    if (!recommendations) return <div>Missing post!</div>
+    if (!recommendations) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
     const handleCarouselBreakpoints = () => {
         let numberOfslides: number = 0;
@@ -65,6 +66,9 @@ const MovieRecommendations = () => {
                                 <Link
                                     to={`/movie/${movie.id}`}
                                     state={{ media: movie.title ? 'movie' : 'tv' }}
+                                    onClick={() => scrollTo({top: 0,
+                                        left: 100,
+                                        behavior: "smooth"})}
                                 >
                                     <div className={`h-full w-full flex flex-col`}>
                                         <img
