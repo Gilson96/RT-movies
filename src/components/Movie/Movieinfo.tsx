@@ -24,6 +24,8 @@ const Movieinfo = () => {
 
     if (!movie) return <div className='w-full h-screen flex justify-center items-center'><Spinner /></div>
 
+    console.log(movie)
+
     return (
         <section className='h-full w-full p-[3%] flex flex-col gap-3 small-screen:p-0'>
             {isLoading ?
@@ -53,17 +55,17 @@ const Movieinfo = () => {
                             </div>
                             <div className='flex flex-col gap-2'>
                                 <div className='flex flex-col'>
-                                    <p className='font-semibold small-screen:text-xl small-screen:text-white'>Budget</p>
+                                    <p className='font-semibold small-screen:text-xl small-screen:text-white'>{movie.budget ? 'Budget' : 'Streamer'}</p>
                                     <div className="flex items-center gap-1 w-full">
-                                        <p><CurrencyPoundIcon className="h-6 w-6 small-screen:text-white" /></p>
-                                        <p className="small-screen:text-lg small-screen:text-white font-light">{movie.budget <= 0 ? <p>N/A</p> : String(movie.budget).slice(0, 2) + 'M'}</p>
+                                        {movie.budget && <CurrencyPoundIcon className="h-6 w-6 small-screen:text-white" />}
+                                        <p className="small-screen:text-lg small-screen:text-white font-light">{movie.budget ? movie.budget <= 0 ? <p>N/A</p> : String(movie.budget).slice(0, 2) + 'M' : movie.networks.map((stream: { name: string }) => <p>{stream.name}</p>)}</p>
                                     </div>
                                 </div>
                                 <div className='flex flex-col gap-2'>
-                                    <p className='font-semibold small-screen:text-xl small-screen:text-white'>Revenue</p>
+                                    <p className='font-semibold small-screen:text-xl small-screen:text-white'>{movie.revenue? 'Revenue' : 'Creator'}</p>
                                     <div className="flex items-center gap-1 w-full">
-                                        <p><CurrencyPoundIcon className="h-6 w-6 small-screen:text-white" /></p>
-                                        <p className="small-screen:text-lg small-screen:text-white font-light">{movie.revenue <= 0 ? <p>N/A</p> : String(movie.revenue).slice(0, 2) + 'M'}</p>
+                                        {movie.revenue && <CurrencyPoundIcon className="h-6 w-6 small-screen:text-white" />}
+                                        <p className="small-screen:text-lg small-screen:text-white font-light">{movie.revenue ? movie.revenue <= 0 ? <p>N/A</p> : String(movie.revenue).slice(0, 2) + 'M' : movie.created_by.map((creator: {name: string}) => <p>{creator.name}</p>)}</p>
                                     </div>
                                 </div>
                             </div>

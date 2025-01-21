@@ -83,21 +83,31 @@ const MovieHeroSectionMobile = ({ movieDetails, movieId, poster_path }: HeroSect
             </p>
 
             {/* movieDetails details  */}
-            <div className='h-auto w-full p-[3%] flex flex-wrap justify-center items-center bg-neutral-900 text-white gap-2'>
-                <p className='tablet:text-lg'>
-                    {movieDetails.runtime <= 0 ?
-                        'N/A'
-                        :
-                        movieDetails.runtime ?
-                            convertMinsToHrsMins(movieDetails.runtime)
+            <div className='h-auto w-full p-[3%] flex flex-col justify-start items-start bg-neutral-900 text-white gap-1'>
+                <div className='flex gap-1'>
+                    <p className='font-semibold'>{movieDetails.title ? 'Runtime: ' : 'Number of Seasons:'}</p>
+                    <p className='tablet:text-lg'>
+                        {movieDetails.runtime <= 0 ?
+                            'N/A'
                             :
-                            movieDetails.number_of_seasons + ' seasons'
-                    }
-                </p>
-
-                <span className='tablet:text-lg'>&#183;</span>
-                {movieDetails.genres.length <= 0 ? 'N/A' :
-                    movieDetails.genres.map((genre: { name: string }) => genre.name).join(',')}
+                            movieDetails.runtime ?
+                                convertMinsToHrsMins(movieDetails.runtime)
+                                :
+                                movieDetails.number_of_seasons
+                        }
+                    </p>
+                </div>
+                <div className='flex gap-1'>
+                    <p className='font-semibold'>Genres: </p>
+                    {/* movie genres */}
+                    <p className=''>
+                        {movieDetails.genres.length <= 0 ?
+                            'N/A'
+                            :
+                            movieDetails.genres.map((genre: { name: string }) => genre.name).join(', ')
+                        }
+                    </p>
+                </div>
             </div>
 
             <div className='h-full w-full flex justify-start items-start gap-2 mt-[2%] p-[2%]'>

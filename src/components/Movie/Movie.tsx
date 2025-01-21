@@ -16,6 +16,7 @@ const Movie = () => {
                     <MovieInfo />
                 </>
             }
+            {screenSize.width < 1000 && <Divider />}
             <MovieActors />
             <Divider />
             <MovieRecommendations />

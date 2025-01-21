@@ -86,7 +86,7 @@ const MovieActors = () => {
                                 :
                                 actors.cast.map((actor: MovieActorsProps, index) => (
                                     <SwiperSlide key={index}>
-                                        <div className='h-[17rem] w-[9rem] flex flex-col justify-between border rounded shadow-md tablet:h-[19rem] small-screen:min-h-[18rem] small-screen:h-full small-screen:w-[11rem]'>
+                                        <div className='h-[18rem] w-[9rem] flex flex-col justify-between border rounded shadow-md tablet:h-[19rem] small-screen:min-h-[18rem] small-screen:h-full small-screen:w-[11rem]'>
                                             <img className='h-[65%] w-full ' src={`https://image.tmdb.org/t/p/${handleImageSize()}/${actor.profile_path}`} />
                                             <div className='h-full w-full flex flex-col px-[3%] border-t'>
                                                 <p className='w-full flex flex-wrap font-bold'>{actor.name}</p>

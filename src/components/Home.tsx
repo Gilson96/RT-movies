@@ -126,8 +126,8 @@ export const MoviesShowCaseSection = ({ list, slidesPerView }: { list: string, s
                                                     className="h-[16rem] w-[11rem] rounded border shadow-lg"
                                                 />
                                             </Tooltip>
-                                            <div className="flex gap-1 p-[2%]">
-                                                <p className="w-[70%] text-sm font-bold truncate">{movie.title}</p>
+                                            <div className="flex w-[11rem] gap-1 p-[2%]">
+                                                <p className="w-full text-sm font-bold truncate">{movie.title}</p>
                                                 <p className="text-sm">{movie.release_date.slice(0, 4)}</p>
                                             </div>
                                         </div>

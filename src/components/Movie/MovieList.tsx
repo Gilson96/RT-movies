@@ -113,9 +113,9 @@ const MovieList = () => {
                                         <div className='h-full w-full flex flex-col justify-center items-start p-[4%]'>
                                             <p className='font-bold text-sm tablet:text-xl'>{movie.title || movie.name}</p>
                                             <p className='text-xs text-neutral-400 italic font-semibold mb-[7%] tablet:text-lg'>Year {movie.title ?
-                                                movie.release_date !== "" ? 'N/A' : movie.release_date.slice(0, 4)
+                                                movie.release_date === "" ? 'N/A' : movie.release_date.slice(0, 4)
                                                 :
-                                                movie.first_air_date !== "" ? 'N/A' : movie.first_air_date.slice(0, 4)
+                                                movie.first_air_date === "" ? 'N/A' : movie.first_air_date.slice(0, 4)
                                             }
                                             </p>
                                             <p className='line-clamp-2 text-sm tablet:text-lg tablet:line-clamp-4'>{movie.overview}</p>

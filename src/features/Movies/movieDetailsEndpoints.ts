@@ -22,6 +22,8 @@ export type Movie = {
     name: string;
     first_air_date: string;
     number_of_seasons: number;
+    networks: [];
+    created_by: []
 }
 
 const allMoviesApi = apiSlice.injectEndpoints({

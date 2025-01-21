@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { useSearchMoviesQuery } from '../../features/Movies/movieDetailsEndpoints'
 import { XCircleIcon } from '@heroicons/react/24/outline'
-import { useDisclosure, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Spinner, Tooltip } from '@chakra-ui/react'
+import {
+    useDisclosure, Button, Modal, ModalOverlay, ModalContent,
+    ModalHeader, ModalFooter, ModalBody, Spinner, Tooltip
+} from '@chakra-ui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import useScreenSize from "../../features/useScreenSize";
 import { Link } from 'react-router'
@@ -43,14 +46,14 @@ const NavigatorSearch = () => {
                     <ModalHeader className='flex items-center justify-between'>
                         <input
                             type='text'
-                            className='h-auto w-[70%] border py-[2%] px-[5%] rounded-xl shadow tablet:py-[1%] small-phone:w-[90%]'
+                            className='h-auto w-[70%] text-sm border py-[2%] px-[5%] rounded-xl shadow tablet:py-[1%] small-phone:w-[90%] tablet:text-sm '
                             placeholder='search...'
                             onChange={handleChange}
                             value={inputValue}
                         />
                         <i onClick={onClose}>
                             <Tooltip label='Close'>
-                                <XCircleIcon className='h-7 w-7 cursor-pointer small-screen:h-8 small-screen:w-8' />
+                                <XCircleIcon className='h-8 w-8 cursor-pointer small-screen:h-8 small-screen:w-8' />
                             </Tooltip>
                         </i>
 
@@ -62,7 +65,7 @@ const NavigatorSearch = () => {
                                 <Spinner />
                             </div>
                             :
-                            <div className='h-full flex flex-wrap gap-2'>
+                            <div className='h-full flex flex-wrap justify-center gap-3'>
                                 {search.results.map((movie: NavigationSearchProps, index: number) => (
 
                                     <Link
@@ -70,12 +73,12 @@ const NavigatorSearch = () => {
                                         to={`/movie/${movie.id}`}
                                         onClick={onClose}
                                         state={{ media: 'movie' }}
-                                        className=' w-[30%]'
+                                        className=' w-[40%]'
                                     >
                                         <img
                                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                             alt="poster"
-                                            className="h-[12rem] w-[8rem] rounded border shadow-lg small-screen:h-[15rem] small-screen:w-[10rem]"
+                                            className="h-[10rem] w-[7rem] rounded border shadow-lg small-screen:h-[15rem] small-screen:w-[10rem]"
                                         />
                                         <p className='text-xs font-bold'>{movie.title}</p>
                                     </Link>

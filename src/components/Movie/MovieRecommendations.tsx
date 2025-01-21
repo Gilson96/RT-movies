@@ -3,11 +3,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper-bundle.css'
 import { useGetMovieRecommendationsQuery } from "../../features/Movies/movieDetailsEndpoints";
 import { useParams, Link, useLocation } from "react-router";
-import { Spinner } from "@chakra-ui/react";
+import { Spinner, Tooltip } from "@chakra-ui/react";
 
 type MovieRecommendationsProps = {
     id: string,
     title: string;
+    name: string
     release_date: string;
     first_air_date: string;
     poster_path: string;
@@ -66,9 +67,11 @@ const MovieRecommendations = () => {
                                 <Link
                                     to={`/movie/${movie.id}`}
                                     state={{ media: movie.title ? 'movie' : 'tv' }}
-                                    onClick={() => scrollTo({top: 0,
+                                    onClick={() => scrollTo({
+                                        top: 0,
                                         left: 100,
-                                        behavior: "smooth"})}
+                                        behavior: "smooth"
+                                    })}
                                 >
                                     <div className={`h-full w-full flex flex-col`}>
                                         <img
@@ -77,7 +80,9 @@ const MovieRecommendations = () => {
                                             className="h-[16rem] w-[11rem] rounded border shadow-lg small-screen:h-[20rem] small-screen:w-[13rem]"
                                         />
                                         <div className="flex gap-1 p-[2%] w-[70%]">
-                                            <p className="font-bold truncate">{movie.title}</p>
+                                            <Tooltip label={movie.title || movie.name}>
+                                                <p className="font-bold truncate">{movie.title || movie.name}</p>
+                                            </Tooltip>
                                             <span>&#183;</span>
                                             <p>{movie.title ? movie.release_date.slice(0, 4) : movie.first_air_date.slice(0, 4)}</p>
                                         </div>
