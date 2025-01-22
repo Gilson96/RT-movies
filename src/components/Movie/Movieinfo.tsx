@@ -76,9 +76,9 @@ const Movieinfo = () => {
                                     </div>
                                 </div>
                                 <div className='flex flex-col gap-2'>
-                                    <p className='font-semibold small-screen:text-xl small-screen:text-white'>{movie.title? 'Revenue' : 'Creator'}</p>
+                                    <p className='font-semibold small-screen:text-xl small-screen:text-white'>{movie.title ? 'Revenue' : 'Creator'}</p>
                                     <div className="flex items-center gap-1 w-full">
-                                        {movie.revenue && <CurrencyPoundIcon className="h-6 w-6 small-screen:text-white" />}
+                                        {movie.title && <CurrencyPoundIcon className="h-6 w-6 small-screen:text-white" />}
                                         <p className="small-screen:text-lg small-screen:text-white font-light">{movieRevenueOrTvCreator()}</p>
                                     </div>
                                 </div>
